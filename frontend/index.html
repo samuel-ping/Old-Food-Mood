@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Moods</title>
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="Use your emotions to choose a restaurant!">
+
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.451.0.min.js"></script>
+        <script src="rekognitionmethods.js"></script>
+    </head>
+    <body>
+        <!--Logo header that links to homepage-->
+        <div id="logo">
+                <a href="index.html" id="logop1">food</a> 
+                <a href="index.html" id="logop2">MOODS</a> 
+        </div>
+        <!-- <hr> -->
+        <!--Descriptions-->
+        <div id="descriptions">
+            <p><b>WHAT THIS IS: </b>This web app uses your photo and using your emotions, suggests restaurants for you!</p>
+            <p><b>HOW IT WORKS: </b>Either take a photo of yourself (and whoever you're with!) or choose an image from your gallery, and this web app will detect your emotion(s) and suggest nearby restaurants according to how you appear to be feeling!</p>
+        </div>
+        <!-- User input photo-->
+        <!-- <div>
+            <input type="file" id="userphoto" name="userphoto" accept="image/*" onchange="processImage()">
+        </div> -->
+        <div>
+            <label for="userphoto" id="chooseimagebutton">
+                Upload Photo
+            </label>
+            <input id="userphoto" type="file" onchange="processImage()"/>
+        </div>
+    </body>
+</html>
+<!--  -->
