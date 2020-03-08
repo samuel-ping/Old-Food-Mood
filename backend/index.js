@@ -5,7 +5,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var AWS = require('aws-sdk');
-// const fs = require('fs');
 
 // setting AWS credentials
 AWS.config.region = process.env.AWS_CONFIG_REGION;
@@ -54,15 +53,17 @@ app.post("/handle-image", function (req, res) {
         ]
     };
 
+    // using Rekognition to find the face(s) in the photo
     rekognition.detectFaces(params, function(err, data) {
 		if (err) {
 			console.log(err, err.stack);
 			console.log('There was an error parsing your photo.');
 		} else {
             const numPeople = data.FaceDetails.length;
-	        const EmotionsData = data.FaceDetails[0].Emotions;
+	        const EmotionsData = data.FaceDetails[0].Emotions; // extracting the emotions from faces dataset
 	        let highestConfidence, highestEmotion;
 
+            // finding the emotion that Rekognition is most confident in
 	        for(var j = 0; j < numPeople; j++) {
 		        for(var i = 0; i < EmotionsData.length; i++) {
 			        if(i === 0) {
