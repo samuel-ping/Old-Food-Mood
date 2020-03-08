@@ -2,7 +2,7 @@
   "name": "food-mood",
   "version": "0.0.5",
   "description": "This web app takes your selfie, then using facial recognition, detects your mood and recommends you restaurants based on your mood!",
-  "main": "backend/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "node backend/index.js"
   },
