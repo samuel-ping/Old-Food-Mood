@@ -63,132 +63,14 @@ function postImage() {
 			});
 
 			$.post('/handle-image', jsonFormImage, function() {
-				console.log("3");
-	
-				const numPeople = data.FaceDetails.length;
-				const EmotionsData = data.FaceDetails[0].Emotions;
-				let highestConfidence, highestEmotion;
-	
-				for(var j = 0; j < numPeople; j++) {
-					for(var i = 0; i < EmotionsData.length; i++) {
-						if(i === 0) {
-							highestConfidence = EmotionsData[i].Confidence;
-							highestEmotion = EmotionsData[i].Type;
-						} else {
-							if(EmotionsData[i].Confidence > highestConfidence) {
-								highestConfidence = EmotionsData[i].Confidence;
-								highestEmotion = EmotionsData[i].Type;
-							}
-						}
-					}
-				}
-				finalEmotion = highestEmotion;
-				sessionStorage.setItem("emotion", finalEmotion);
-				alert(finalEmotion); // testing if getting emotion works
 			});
-
-
 		}
 		fileReader.readAsDataURL(fileToLoad);
 	  }
-
-
-	// console.log("1");
-	// console.log(typeof(encodedImage));
-	// $(document).ready(function() {
-	// 	console.log("2");
-
-		// $.post('/handle-image', encodedImage, function() {
-		// 	console.log("3");
-
-		// 	const numPeople = data.FaceDetails.length;
-		// 	const EmotionsData = data.FaceDetails[0].Emotions;
-		// 	let highestConfidence, highestEmotion;
-
-		// 	for(var j = 0; j < numPeople; j++) {
-		// 		for(var i = 0; i < EmotionsData.length; i++) {
-		// 			if(i === 0) {
-		// 				highestConfidence = EmotionsData[i].Confidence;
-		// 				highestEmotion = EmotionsData[i].Type;
-		// 			} else {
-		// 				if(EmotionsData[i].Confidence > highestConfidence) {
-		// 					highestConfidence = EmotionsData[i].Confidence;
-		// 					highestEmotion = EmotionsData[i].Type;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// 	finalEmotion = highestEmotion;
-		// 	sessionStorage.setItem("emotion", finalEmotion);
-		// 	alert(finalEmotion); // testing if getting emotion works
-		// });
-	// })
 }
 
   // removes element from html
   function removeElement(elementId) {
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
-}
-
-// Processes image
-function processImage() {
-	const control = document.getElementById('userphoto');
-	var finalEmotion;
-
-	if (control.files.length > 0) {
-		const file = control.files[0];
-		const reader = new FileReader();
-
-		reader.onload = function(e) {
-			getFaceData(e.target.result);
-		};
-		reader.readAsArrayBuffer(file);
-	}
-}
-
-function getFaceData(imgData) {
-    const params = {
-        Image: {
-          Bytes: imgData
-        },
-        Attributes: [
-          'ALL',
-        ]
-    };
-
-	rekognition.detectFaces(params, function(err, data) {
-		if (err) {
-			console.log(err, err.stack);
-			alert('There was an error parsing your photo.');
-		} else {
-            // console.log(data);
-            getEmotion(data)
-		}
-	});
-}
-		
-// returns the emotion that Rekognition is most confident of out of all the people
-// If I have time to improve this, take into account how many of each emotion there is (integer array size 8 with each emotion that counts how many people have each emotion)
-function getEmotion(data) {
-	const numPeople = data.FaceDetails.length;
-	const EmotionsData = data.FaceDetails[0].Emotions;
-	let highestConfidence, highestEmotion;
-
-	for(var j = 0; j < numPeople; j++) {
-		for(var i = 0; i < EmotionsData.length; i++) {
-			if(i === 0) {
-				highestConfidence = EmotionsData[i].Confidence;
-				highestEmotion = EmotionsData[i].Type;
-			} else {
-				if(EmotionsData[i].Confidence > highestConfidence) {
-					highestConfidence = EmotionsData[i].Confidence;
-					highestEmotion = EmotionsData[i].Type;
-				}
-			}
-		}
-	}
-	finalEmotion = highestEmotion;
-	sessionStorage.setItem("emotion", finalEmotion);
-	alert(finalEmotion); // testing if getting emotion works
 }

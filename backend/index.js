@@ -42,24 +42,12 @@ app.post("/handle-image", function (req, res) {
         }
     }
 
-    // var length = image.length;
-    //     imageBytes = new ArrayBuffer(length);
-    //     var ua = new Uint8Array(imageBytes);
-    //     for (var i = 0; i < length; i++) {
-    //       ua[i] = image.charCodeAt(i);
-    //     }
-
-
-// for(var i = 0; i < 35; i++) {
-//     console.log(ua[i]);
-
-// }
-
+    const buffer = new Buffer.from(image, 'base64');
 
     // setting parameters for Amazon Rekognition
     const params = {
         Image: {
-          Bytes: image
+          Bytes: buffer
         },
         Attributes: [
           'ALL',
