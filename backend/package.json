@@ -1,0 +1,24 @@
+{
+  "name": "food-mood",
+  "version": "0.0.3",
+  "description": "This web app takes your selfie, then using facial recognition, detects your mood and recommends you restaurants based on your mood!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuel-ping/Food-Mood.git"
+  },
+  "author": "Samuel Ping",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuel-ping/Food-Mood/issues"
+  },
+  "homepage": "https://github.com/samuel-ping/Food-Mood#readme",
+  "dependencies": {
+    "aws-sdk": "^2.635.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
