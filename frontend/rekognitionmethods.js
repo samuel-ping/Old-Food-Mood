@@ -1,13 +1,7 @@
-window.onload = getLocationandStore(); // gets the user's location as soon as the page.
+window.onload = getLocationandPost(); // gets the user's location as soon as the page.
 var finalEmotion;
 
-function loadFile(event) {
-	var output = document.getElementById("output");
-	output.src = URL.createObjectURL(event.target.files[0]);
-}
-
-
-function getLocationandStore() {
+function getLocationandPost() {
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			const longitudeString = position.coords.longitude + '';
@@ -52,9 +46,8 @@ function postImage() {
 		  	removeElement('imgTest'); // removes image from website
 
 			// let betterEncodedImage = encodedImage.slice(encodedImage.indexOf("base64")+7, -2); // just the base64 code
-			let betterEncodedImage = encodedImage.slice(10, -2); // includes image type
+			let betterEncodedImage = encodedImage.slice(10, -2); // doesn't remove image type
 
-			console.log(betterEncodedImage);
 			let presjsonFormImage = '{ "encodedImage": "'.concat(betterEncodedImage).concat('" }');
 			let jsonFormImage = JSON.parse(JSON.stringify(presjsonFormImage));
 

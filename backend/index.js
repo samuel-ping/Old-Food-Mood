@@ -78,7 +78,9 @@ app.post("/handle-image", function (req, res) {
 		        }
 	        }       
 	        finalEmotion = highestEmotion;
-	        console.log(finalEmotion); // testing if getting emotion works
+            console.log(finalEmotion); // testing if getting emotion works
+            
+            const emotionJSON = { 'emotion': finalEmotion };
 		}
 	});
 })
