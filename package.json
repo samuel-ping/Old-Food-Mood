@@ -4,7 +4,7 @@
   "description": "This web app takes your selfie, then using facial recognition, detects your mood and recommends you restaurants based on your mood!",
   "main": "index.js",
   "scripts": {
-    "test": "node backend/index.js"
+    "start": "node backend/index.js"
   },
   "repository": {
     "type": "git",
