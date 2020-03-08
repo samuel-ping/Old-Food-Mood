@@ -49,27 +49,27 @@ a:hover#logop2 {
     padding: 1%;
 }
 
+#center {
+    text-align: center;
+    margin-top: 3%;
+}
+
 #chooseimagebutton {
-    position: fixed;
+    position: relative;
     cursor: pointer;
     color:white;
-    margin-top: 1%; 
-    margin-left: 1%; 
     background-color:#003CFF;
     border-bottom: 4px solid #485DFF;
     padding: 2% 4%;
-    border-radius: 1%;
     transition: background-color 200ms ease-out;
 }
 
 #chooseimagebutton:hover {
-    /* light color */
     background-color:#003CFF;
 
 }
 
 #chooseimagebutton:active{
-    /* dark color */
     background-color:#215198;
 
     border-width: 2px;
