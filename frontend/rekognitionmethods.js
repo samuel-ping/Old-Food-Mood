@@ -78,13 +78,16 @@ function postImage() {
 				// parsing JSON data
 				var mood = jsondata.slice(jsondata.indexOf('"mood') + 11, -4);
 				var restaurantname = jsondata.slice(jsondata.indexOf('"name') + 10, jsondata.indexOf('"image_url') - 4);
+				var restaurantaddress = jsondata.slice(jsondata.indexOf('"address1') + 14, jsondata.indexOf('"address2') - 4).concat(
+					', ').concat(jsondata.slice(jsondata.indexOf('"city') + 10, jsondata.indexOf('"zip_code') - 4)).concat(
+						' ').concat(jsondata.slice(jsondata.indexOf('"zip_code') + 14, jsondata.indexOf('"country') - 4)
+				);
 
 				document.getElementById("finalmood").innerHTML = "You Appear to be " + mood;
 				document.getElementById("results").style.backgroundColor = "#FFC400";
 				document.getElementById("results").style.boxShadow = "4px 4px";
-				document.getElementById("restaurantsuggestion").innerHTML = "A restaurant that fits your mood is " + restaurantname;
-
-
+				document.getElementById("restaurantsuggestion").innerHTML = "A restaurant that fits your mood is " + restaurantname + ".";
+				document.getElementById("restaurantaddress").innerHTML = restaurantaddress;
 
 			}, "json");
 		}
@@ -93,13 +96,18 @@ function postImage() {
 }
 
 // Initialize and add the map
+// function initMap() {
+// 	var uluru = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+// 	var map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: uluru});
+
+// 	var marker = new google.maps.Marker({position: uluru, map: map});
+//   }
 function initMap() {
-	var uluru = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
-	var map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: uluru});
-
-	var marker = new google.maps.Marker({position: uluru, map: map});
+	map = new google.maps.Map(document.getElementById('map'), {
+	  center: {lat: parseFloat(latitude), lng: parseFloat(longitude)},
+	  zoom: 6
+	});
   }
-
 
   // removes element from html
   function removeElement(elementId) {
