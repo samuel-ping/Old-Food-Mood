@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, '/../frontend'))); // shows my front
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
+// takes the base64 encoded image from my JavaScript post and uses Rekognition on it to detect mood
 app.post("/handle-image", function (req, res) {
     let encodedImage = JSON.stringify(req.body).slice(17, -2); // slices off key, leaving the value which is the bases64 encoded image
 
