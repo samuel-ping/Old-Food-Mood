@@ -35,6 +35,11 @@ app.post("/handle-image", function (req, res) {
     let encodedImage = JSON.stringify(req.body).substring(17); // slices off key
     let longitudeString = encodedImage.substring(encodedImage.indexOf('","longitude":') + 15, encodedImage.indexOf('","latitude":'));
     let latitudeString = encodedImage.slice(encodedImage.indexOf('","latitude":')+14, -2);
+
+    // converting longitude and latitude from string to numbers
+    let longitude = parseFloat(longitudeString);
+    let latitude = parseFloat(latitudeString);
+
     encodedImage = encodedImage.substring(0, encodedImage.indexOf('","longitude":'));
     
     const rekognition = new AWS.Rekognition();
@@ -92,21 +97,29 @@ app.post("/handle-image", function (req, res) {
 			        }
 		        }
 	        }       
-	        finalEmotion = highestEmotion;
-            console.log(finalEmotion); // testing if getting emotion works
+            finalEmotion = highestEmotion;
+            
+            // 1. SEND QUERY TO YELP API WITH SEARCH TERMS: "food " + finalMood
+            // 2. Compile into JSON format
+            // 3. res.json(JSONFILE)
+
+            let searchTerm = 'food '.concat(finalEmotion);
+
+            client.search({
+                term: searchTerm,
+                latitude: latitude,
+                longitude: longitude,
+                limit: 1,
+                open_now: true
+            }).then(response => {
+                var returnJSON = JSON.stringify(response.jsonBody.businesses[0]);
+                returnJSON = returnJSON.slice(0,-1).concat(',"mood": "').concat(finalEmotion).concat('"}');
+                res.json(returnJSON);
+            }).catch(e => {
+                console.log(e);
+            })
 		}
     });
-    
-
-    // 1. SEND QUERY TO YELP API WITH SEARCH TERMS: "food " + finalMood
-    // 2. Compile into JSON format
-    // 3. res.json(JSONFILE)
-
-    client.search({
-
-    })
-
-
 })
 
 app.use(function (req, res, next) {
