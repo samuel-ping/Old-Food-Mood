@@ -1,7 +1,7 @@
 {
   "name": "food-mood",
   "version": "0.0.5",
-  "description": "This web app takes your selfie, then using facial recognition, detects your mood and recommends you restaurants based on your mood!",
+  "description": "Find restaurants with your mood!",
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js"
@@ -20,6 +20,7 @@
     "aws-sdk": "^2.635.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "yelp-fusion": "^3.0.0"
   }
 }

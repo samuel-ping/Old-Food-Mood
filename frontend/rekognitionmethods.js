@@ -1,11 +1,15 @@
 window.onload = getLocationandPost(); // gets the user's location as soon as the page.
 var finalEmotion;
+var longitudeString
+var latitudeString
 
 function getLocationandPost() {
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
-			const longitudeString = position.coords.longitude + '';
-			const latitudeString = position.coords.latitude + '';
+			longitudeString = position.coords.longitude + '';
+			latitudeString = position.coords.latitude + '';
+			console.log(longitudeString);
+			console.log(latitudeString);
 		});
 	} else {
 			alert("HTML5 Geolocation is not supported by this browser.");
@@ -48,14 +52,23 @@ function postImage() {
 			// let betterEncodedImage = encodedImage.slice(encodedImage.indexOf("base64")+7, -2); // just the base64 code
 			let betterEncodedImage = encodedImage.slice(10, -2); // doesn't remove image type
 
-			let presjsonFormImage = '{ "encodedImage": "'.concat(betterEncodedImage).concat('" }');
+			// preparing JSON to be sent to server
+			let presjsonFormImage = '{'.concat(
+				'"encodedImage": "').concat(betterEncodedImage).concat('",').concat(
+				'"longitude": "').concat(longitudeString).concat('",').concat(
+				'"latitude": "').concat(latitudeString).concat('"').concat(
+				'}');
+			
+			// converting variable type to JSON
 			let jsonFormImage = JSON.parse(JSON.stringify(presjsonFormImage));
 
 			$.ajaxSetup({
 				headers: {'content-type':'application/json'}
 			});
 
+			// posts base64 encoded image to server
 			$.post('/handle-image', jsonFormImage, function() {
+				// console.log(eval(result.responseText));
 			});
 		}
 		fileReader.readAsDataURL(fileToLoad);

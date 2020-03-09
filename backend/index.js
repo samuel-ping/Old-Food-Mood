@@ -4,7 +4,8 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
+const yelp = require('yelp-fusion');
 
 // setting AWS credentials
 AWS.config.region = process.env.AWS_CONFIG_REGION;
@@ -12,18 +13,31 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: process.env.AWS_CONFIG_IDENTITYPOOLID,
 });
 
-app.use(express.static(path.join(__dirname, '/../frontend'))); // shows my front page!
+// setting Yelp API key
+const client = yelp.client(process.env.YELP_API_KEY);
+
+// declaring the variable that will eventually be a JSON file sent back to frontend
+var responseJSON;
+// the mood that will be used to query the Yelp API as well as send back
+var finalEmotion;
+
+// shows homepage!
+app.use(express.static(path.join(__dirname, '/../frontend')));
 
 // setting larger limits because images are big
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
+
 // takes the base64 encoded image from my JavaScript post and uses Rekognition on it to detect mood
 app.post("/handle-image", function (req, res) {
-    let encodedImage = JSON.stringify(req.body).slice(17, -2); // slices off key, leaving the value which is the bases64 encoded image
-
+    // parsing the JSON post
+    let encodedImage = JSON.stringify(req.body).substring(17); // slices off key
+    let longitudeString = encodedImage.substring(encodedImage.indexOf('","longitude":') + 15, encodedImage.indexOf('","latitude":'));
+    let latitudeString = encodedImage.slice(encodedImage.indexOf('","latitude":')+14, -2);
+    encodedImage = encodedImage.substring(0, encodedImage.indexOf('","longitude":'));
+    
     const rekognition = new AWS.Rekognition();
-    var finalEmotion;
     
     var image = null;
     var jpg = true;
@@ -80,10 +94,19 @@ app.post("/handle-image", function (req, res) {
 	        }       
 	        finalEmotion = highestEmotion;
             console.log(finalEmotion); // testing if getting emotion works
-            
-            const emotionJSON = { 'emotion': finalEmotion };
 		}
-	});
+    });
+    
+
+    // 1. SEND QUERY TO YELP API WITH SEARCH TERMS: "food " + finalMood
+    // 2. Compile into JSON format
+    // 3. res.json(JSONFILE)
+
+    client.search({
+
+    })
+
+
 })
 
 app.use(function (req, res, next) {
@@ -92,5 +115,5 @@ app.use(function (req, res, next) {
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
-    console.log('Food Mood listening on port ${PORT}');
+    console.log('Food Mood listening on port #{PORT}');
 });
