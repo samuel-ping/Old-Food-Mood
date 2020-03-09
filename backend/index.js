@@ -114,6 +114,7 @@ app.post("/handle-image", function (req, res) {
             }).then(response => {
                 var returnJSON = JSON.stringify(response.jsonBody.businesses[0]);
                 returnJSON = returnJSON.slice(0,-1).concat(',"mood": "').concat(finalEmotion).concat('"}');
+                // console.log(finalEmotion)
                 res.json(returnJSON);
             }).catch(e => {
                 console.log(e);

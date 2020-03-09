@@ -2,14 +2,18 @@ window.onload = getLocationandPost(); // gets the user's location as soon as the
 var finalEmotion;
 var longitudeString
 var latitudeString
+// Created two more coordinate variables so I can use them as numbers for Google Maps
+var latitude;
+var longitude;
 
 function getLocationandPost() {
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
+			// sets user coordinates to variables to be later appended to JSON HTTP post
+			longitude = parseFloat(position.coords.longitude);
+			latitude = parseFloat(position.coords.latitude);
 			longitudeString = position.coords.longitude + '';
 			latitudeString = position.coords.latitude + '';
-			console.log(longitudeString);
-			console.log(latitudeString);
 		});
 	} else {
 			alert("HTML5 Geolocation is not supported by this browser.");
@@ -67,13 +71,35 @@ function postImage() {
 			});
 
 			// posts base64 encoded image to server
-			$.post('/handle-image', jsonFormImage, function() {
-				// console.log(eval(result.responseText));
-			});
+			$.post('/handle-image', jsonFormImage, function(data) {
+				var jsondata = JSON.stringify(data);
+				console.log(jsondata);
+
+				// parsing JSON data
+				var mood = jsondata.slice(jsondata.indexOf('"mood') + 11, -4);
+				var restaurantname = jsondata.slice(jsondata.indexOf('"name') + 10, jsondata.indexOf('"image_url') - 4);
+
+				document.getElementById("finalmood").innerHTML = "You Appear to be " + mood;
+				document.getElementById("results").style.backgroundColor = "#FFC400";
+				document.getElementById("results").style.boxShadow = "4px 4px";
+				document.getElementById("restaurantsuggestion").innerHTML = "A restaurant that fits your mood is " + restaurantname;
+
+
+
+			}, "json");
 		}
 		fileReader.readAsDataURL(fileToLoad);
 	  }
 }
+
+// Initialize and add the map
+function initMap() {
+	var uluru = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+	var map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: uluru});
+
+	var marker = new google.maps.Marker({position: uluru, map: map});
+  }
+
 
   // removes element from html
   function removeElement(elementId) {

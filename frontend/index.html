@@ -6,8 +6,9 @@
         <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.451.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDr9h7T4oGEZVc0cGu87XHA6K7tKQJhRlY&callback=initMap">
+    </script>
         <script src="rekognitionmethods.js"></script>
     </head>
     <body>
@@ -28,6 +29,19 @@
             </label>
             <input id="userphoto" type="file" onchange="postImage()"/>
         </div>
+
+        <!-- Map Div -->
+        <div id="map"></div>
+
+        <!-- the imgTest div is used for encoding the image into base64 -->
         <div id="imgTest"></div>
+
+        <!-- Hidden until after image is inputted -->
+        <div id="results">
+            <h2 id="finalmood"></h2>
+            <h3 id="restaurantsuggestion"></h3>
+            <!-- <p id="restaurantaddress"></p> -->
+        </div>
+        
     </body>
 </html>
