@@ -1,4 +1,4 @@
-# Food-Mood
+# Food Mood
 ## About
 This web app was built as an entry to Capital One's Software Engineering Summit challenge. It uses HTML, CSS, JavaScript, Express.js, and Node.js. The challenge was to create a web app using Yelp's Fusion API to help you choose a restaurant. This web app takes your selfie (plus whoever you're with), and using Amazon's Rekognition API, determines the most visible emotion in the photo. Then, using Yelp's Fusion API, it searches for a restaurant based on your mood!
 ## How To Use
