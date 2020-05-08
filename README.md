@@ -1,5 +1,5 @@
 # Food Mood
-### This is my original submission to the Capital One challenge. I'm improving my website in a separate repo on GitHub!
+### This is my original submission to the Capital One challenge. I have improved my website in a separate repo on GitHub, which you can find at: https://github.com/samuel-ping/food-mood
 ## About
 This web app was built as an entry to Capital One's Software Engineering Summit challenge. It uses HTML, CSS, JavaScript, Express.js, and Node.js. The challenge was to create a web app using Yelp's Fusion API to help you choose a restaurant. This web app takes your selfie (plus whoever you're with), and using Amazon's Rekognition API, determines the most visible emotion in the photo. Then, using Yelp's Fusion API, it searches for a restaurant based on your mood!
 ## How To Use
